@@ -41,6 +41,8 @@ const props = defineProps({
     border-bottom: 1px dashed var(--vp-c-divider-light);
     padding: 14px 0 14px 0;
     box-sizing: border-box;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .list {

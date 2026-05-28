@@ -86,12 +86,12 @@ const getPostUrl = (post: any) => {
 
 const handleSearch = () => {
   if (searchQuery.value.trim()) {
-    window.location.href = withBase(`/pages/search?search=${encodeURIComponent(searchQuery.value)}`)
+    window.location.href = withBase(`/pages/search?search=${encodeURIComponent(searchQuery.value.trim())}`)
   }
 }
 
 const searchTag = (tag: string) => {
-  window.location.href = `?tag=${encodeURIComponent(tag)}`
+  window.location.href = withBase(`/pages/search?search=${encodeURIComponent(tag)}`)
 }
 
 onMounted(() => {

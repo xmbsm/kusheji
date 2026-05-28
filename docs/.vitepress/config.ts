@@ -26,7 +26,8 @@ export default defineConfig<ThemeConfig>({
         sidebar: [{}], //这里如果删掉，左侧栏的内容全部不显示。页面布局会变成通栏
         nav: [
             { text: '主站', link: 'https://kusheji.com' },
-            { text: '网址导航', link: 'https://dh.kusheji.com' }
+            { text: '网址导航', link: 'https://dh.kusheji.com' },
+            { text: '搜索', link: '/pages/search' }
         ],
         music: [ //音乐列表，音乐播放器参数在.vitepress/store/player.ts。封面和歌词不支持可自行按照文章教程修改
             // {

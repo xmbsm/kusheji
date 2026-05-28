@@ -39,12 +39,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
-import { withBase, useRouter } from 'vitepress'
+import { ref, computed, onMounted, watch } from 'vue'
+import { withBase, useRoute } from 'vitepress'
 import { data as themeposts } from '../posts.data'
 import type { Post } from '../types'
 
-const router = useRouter()
+const route = useRoute()
 const keyword = ref('')
 
 const filteredPosts = computed(() => {
@@ -66,18 +66,16 @@ const handleClick = (article: Post) => {
 }
 
 const getKeywordFromUrl = () => {
-  const url = new URL(window.location.href)
-  return url.searchParams.get('search') || ''
+  return route.query.search as string || ''
 }
+
+watch(() => route.query.search, (newSearch) => {
+  keyword.value = (newSearch as string) || ''
+}, { immediate: true })
 
 onMounted(() => {
   keyword.value = getKeywordFromUrl()
 })
-
-router.onBeforeRouteChange = (to: string) => {
-  const url = new URL(to, window.location.origin)
-  keyword.value = url.searchParams.get('search') || ''
-}
 </script>
 
 <style scoped>

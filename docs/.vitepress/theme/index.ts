@@ -30,6 +30,7 @@ import Links from './components/Links.vue'
 import Welcome from './components/Welcome.vue'
 import Footer from './components/Footer.vue'
 import SearchResults from './components/SearchResults.vue'
+import SearchPage from './components/SearchPage.vue'
 import { createPinia } from 'pinia'  //使用状态管理库。用于音乐播放器的状态监听
 import FloatingVue from 'floating-vue'  //使用 tooltip库。用于hover提示、悬浮框等。教程见https://floating-vue.starpad.dev/
 import 'floating-vue/dist/style.css'
@@ -84,6 +85,7 @@ export default {
         app.component('Welcome', Welcome)
         app.component('Footer', Footer)
         app.component('SearchResults', SearchResults)
+        app.component('SearchPage', SearchPage)
         app.use(pinia)
         app.use(FloatingVue, {
             themes: {
