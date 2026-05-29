@@ -116,8 +116,8 @@ onMounted(() => {
   padding-top: 8px;
 
   .h1 {
-    font-size: 1.87rem;
-    line-height: 2.25rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
     margin-bottom: 10px;
     font-weight: bold;
   }

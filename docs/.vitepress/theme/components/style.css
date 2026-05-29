@@ -350,6 +350,7 @@ html, body {
     .VPNavBar .content-body {
         display: flex !important;
         align-items: center !important;
+        padding: 0 10px 0 20px !important;
     }
     
     /* logo链接区域靠左，其他内容自动靠右 */
