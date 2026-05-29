@@ -305,7 +305,7 @@ html, body {
 .VPNavBar .content-body {
     width: 100% !important;
     max-width: 100% !important;
-    padding: 0 32px !important;
+    padding: 0 20px !important;
     box-sizing: border-box !important;
 }
 
@@ -322,6 +322,10 @@ html, body {
 
 /* 移动端导航栏样式：确保logo和名字在左侧显示 */
 @media (max-width: 768px) {
+    .nav-search-btn-wait svg {
+        stroke-width: 2;
+    }
+
     /* 直接控制导航栏容器左对齐 */
     .VPNavBar .content-body {
         display: flex !important;
@@ -777,6 +781,16 @@ p.icons img {
 
 .VPDoc.has-aside .content-container .main img {
     width: 100%;
+}
+
+/* 隐藏移动端顶部返回顶部按钮 */
+.VPLocalNavOutlineDropdown {
+    display: none !important;
+}
+
+/* 隐藏无侧边栏页面的菜单栏 */
+.no-sidebar .VPLocalNav {
+    display: none !important;
 }
 
 /* 返回顶部按钮样式 */

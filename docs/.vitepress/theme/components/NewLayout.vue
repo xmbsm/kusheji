@@ -1,6 +1,6 @@
 <template>
     <!-- 对页面布局做统筹管理 -->
-    <Layout :class="{ home: frontmatter?.index, post: frontmatter?.post }">
+    <Layout :class="{ home: frontmatter?.index, post: frontmatter?.post, 'no-sidebar': frontmatter?.aside === false && !frontmatter?.index }">
         <template #not-found>
             <!-- 页面不存在 -->
                 <div class="page404">
@@ -93,8 +93,8 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { computed, toRefs,onMounted,ref, onUnmounted } from 'vue'
-import { useData, useRouter } from 'vitepress'
+import { computed, toRefs, onMounted, ref, onUnmounted, watch, nextTick } from 'vue'
+import { useData, useRouter, useRoute } from 'vitepress'
 import { usePlayerStore } from '../../store/player'
 import md5 from 'blueimp-md5'
 import DefaultTheme from 'vitepress/theme'
@@ -106,6 +106,27 @@ import Home from './Home.vue'
 const { isPause } = toRefs(usePlayerStore())
 const { page, theme, frontmatter, isDark } = useData()
 const { Layout } = DefaultTheme;
+const route = useRoute()
+
+function updateLocalNavVisibility() {
+    const shouldHide = frontmatter.value?.aside === false && !frontmatter.value?.index
+    nextTick(() => {
+        const localNav = document.querySelector('.VPLocalNav')
+        if (localNav) {
+            localNav.style.display = shouldHide ? 'none' : ''
+        }
+    })
+}
+
+onMounted(() => {
+    updateLocalNavVisibility()
+})
+
+watch(() => route.path, () => {
+    nextTick(() => {
+        updateLocalNavVisibility()
+    })
+})
 
 // 滚动状态
 const isScrolled = ref(false);
