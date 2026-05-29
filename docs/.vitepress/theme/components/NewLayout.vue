@@ -249,6 +249,10 @@ const backToTopStyle = computed(() => ({
         margin-right: 8px;
     }
 
+    .dark .logo-img {
+        filter: invert(1);
+    }
+
     .logo-text {
         font-size: 14px;
         font-weight: 600;

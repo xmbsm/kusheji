@@ -1,13 +1,12 @@
 <template>
     <!-- 订阅内容更新 -->
     <div class="feed">
-        <div class="main" v-tooltip="'点击复制订阅地址'"
-            @click="handleCopy(`${location.origin}${site?.base ? site.base : '/'}feed.rss`)">
+        <div class="main" :class="{ copied }" @click="onCopy">
             <div class="label">订阅地址</div>
             <div class="ads">
                 {{ `${location.origin}${site?.base ? site.base : '/'}feed.rss` }}
             </div>
-            <div class="copy">点击复制</div>
+            <div class="copy">{{ copied ? '已复制 ✓' : '点击复制' }}</div>
         </div>
         <p class="p">推荐使用Reeder 5.0软件进行订阅</p>
         <a class="a" href="https://www.reederapp.com/" target="_blank"><svg class="svg" viewBox="0 0 24 24"
@@ -21,11 +20,41 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { useData } from 'vitepress'
 import { useBrowserLocation } from '@vueuse/core'
-import { handleCopy } from '../functions'
 const { site } = useData()
 const location = useBrowserLocation()
+
+const copied = ref(false)
+
+function onCopy() {
+    const text = `${location.value.origin}${site.value.base || '/'}feed.rss`
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => showCopied()).catch(() => fallbackCopy(text))
+    } else {
+        fallbackCopy(text)
+    }
+}
+
+function fallbackCopy(text: string) {
+    const textarea = document.createElement('textarea')
+    textarea.value = text
+    textarea.style.position = 'fixed'
+    textarea.style.left = '-9999px'
+    document.body.appendChild(textarea)
+    textarea.select()
+    try {
+        document.execCommand('copy')
+        showCopied()
+    } catch {}
+    document.body.removeChild(textarea)
+}
+
+function showCopied() {
+    copied.value = true
+    setTimeout(() => { copied.value = false }, 2000)
+}
 </script>
 
 <style scoped>
@@ -72,6 +101,16 @@ const location = useBrowserLocation()
         border: 1px solid var(--vp-c-brand-1);
         transition: color .5s;
         transition: border-color .25s;
+    }
+
+    .main.copied {
+        border: 1px solid #22c55e;
+        color: #22c55e;
+        transition: all .3s;
+    }
+
+    .main.copied .copy {
+        color: #22c55e;
     }
 
     .a {

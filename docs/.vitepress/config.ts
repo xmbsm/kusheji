@@ -167,7 +167,7 @@ export default defineConfig<ThemeConfig>({
             welcome: {
                 autoClose: 6000, //多长时间自动关闭，false为不关闭
             },
-            showSnow: true, //是否开启雪花。开启后仅在暗黑模式下显示
+            showSnow: false, //是否开启雪花。开启后仅在暗黑模式下显示
             showUserCard: false, //是否显示列表中的博主名片
             cardPosition: 3, //显示在第几个位置
             cardMusic: true, //是否显示播放音乐，音乐列表在上面 music中配置

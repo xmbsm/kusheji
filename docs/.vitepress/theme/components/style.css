@@ -747,8 +747,24 @@ html, body {
 }
 
 .Vue-Toastification__toast--default {
-    background-color: var(--vp-c-brand);
+    background-color: var(--vp-c-brand) !important;
+    color: #fff !important;
     backdrop-filter: blur(20px);
+}
+
+.Vue-Toastification__toast--success {
+    background-color: var(--vp-c-brand) !important;
+    color: #fff !important;
+    backdrop-filter: blur(20px);
+}
+
+.Vue-Toastification__toast--error {
+    background-color: #e74c3c !important;
+    color: #fff !important;
+}
+
+.Vue-Toastification__container {
+    z-index: 99999 !important;
 }
 
 p.icons img {

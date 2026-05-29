@@ -3,8 +3,6 @@ import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import rTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/zh-cn';
-import { useClipboard } from '@vueuse/core'
-const { copy, isSupported } = useClipboard();
 
 import { toast, type ToastOptions } from 'vue3-toastify';
 
@@ -208,21 +206,44 @@ export const getGithub = async (name: any) => {
 
 // 通用复制提示方式
 export function handleCopy(text: string) {
-    if (!isSupported) {
-        toast("您的浏览器不支持Clipboard API", {
+    let copied = false;
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            toast("复制成功", {
+                autoClose: 2000,
+                "type": "success",
+                "hideProgressBar": true,
+            } as ToastOptions);
+        }).catch(() => {
+            fallbackCopy(text);
+        });
+    } else {
+        fallbackCopy(text);
+    }
+}
+
+function fallbackCopy(text: string) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        toast("复制成功", {
+            autoClose: 2000,
+            "type": "success",
+            "hideProgressBar": true,
+        } as ToastOptions);
+    } catch {
+        toast("复制失败，请手动复制", {
             autoClose: 3000,
             "type": "error",
             "hideProgressBar": true,
         } as ToastOptions);
-        return;
     }
-    copy(text)
-    toast("复制成功", {
-        autoClose: 2000,
-        "type": "success",
-        "hideProgressBar": true,
-    } as ToastOptions);
-
+    document.body.removeChild(textarea);
 }
 
 
