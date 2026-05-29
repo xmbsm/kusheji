@@ -256,6 +256,31 @@ const until = getUntilDate()
     object-fit: cover;
 }
 
+@media (min-width: 1281px) {
+    .slider-container {
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 1280px) {
+    .slider-container {
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 768px) {
+    .slider-container {
+        border-radius: 0;
+    }
+
+    .carousel {
+        border-radius: 8px;
+    }
+}
+
 .newyearcard:hover {
     .tolink {
         color: var(--vp-c-brand-1);

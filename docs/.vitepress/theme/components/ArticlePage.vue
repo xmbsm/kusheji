@@ -194,7 +194,7 @@ watch(
 
 <style scoped>
 .pagtion {
-  margin-top: 32px;
+  margin-top: 48px;
   text-align: center;
 }
 
@@ -206,12 +206,16 @@ watch(
 
   .li {
     margin: 5px;
-    line-height: 24px;
+    display: flex;
+    align-items: center;
   }
 
   .pa {
-    display: inline-block;
-    min-width: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
     text-align: center;
     border: 1px var(--vp-c-divider-light) solid;
     border-radius: 3px;
@@ -225,6 +229,10 @@ watch(
       background: var(--vp-c-text-1);
       color: var(--vp-c-neutral-inverse);
       border: 1px solid var(--vp-c-text-1) !important;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      padding: 0;
       pointer-events: none;
     }
 

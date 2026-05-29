@@ -49,8 +49,8 @@
         </template>
         <template #doc-top>
             <ClientOnly>
-                <HeroBanner v-if="frontmatter?.index" />
-                <!-- <PageSlider v-if="frontmatter?.index" :key="md5(page.relativePath)"></PageSlider> -->
+                <HeroBanner v-if="frontmatter?.index && theme.website?.showHeroBanner !== false" />
+                <PageSlider v-if="frontmatter?.index && theme.website?.homeBanner" :key="md5(page.relativePath)"></PageSlider>
             </ClientOnly>
         </template>
         <template #doc-before>

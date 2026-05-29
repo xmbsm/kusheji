@@ -25,7 +25,7 @@ export default defineConfig<ThemeConfig>({
         beecodeurl: 'https://kusheji.com/', //这里是内页ArticleLink组件用到的跳转第三方网址，一般用不到，仅仅用于二次开发
         sidebar: [{}], //这里如果删掉，左侧栏的内容全部不显示。页面布局会变成通栏
         nav: [
-            { text: '主站', link: 'https://kusheji.com' },
+            { text: '素材站', link: 'https://sucai.kusheji.com' },
             { text: '网址导航', link: 'https://dh.kusheji.com' },
             { text: '搜索', link: '/pages/search' }
         ],
@@ -159,6 +159,7 @@ export default defineConfig<ThemeConfig>({
             description: '设计学习交流平台', //网站描述（用于首页全屏大图）
             copyadd: true, //用户复制页面内容时尾巴自动添加版权声明
             perpage: 18, //列表页每页显示数量
+            showHeroBanner: true, //是否显示首页全屏大图,大搜索框
             homeBanner: false, //显示首页 banner,banner列表在上面 banner中配置
             bannerHeight: 200, //banner高度
             showWelcome: false, //是否显示首页底部右下角弹框，（调试时弹框不显示的话先关闭浏览器再运行，因为有可能开启了缓存）内容请在组件.vitepress/theme/components/Welcome.vue编写
@@ -167,7 +168,7 @@ export default defineConfig<ThemeConfig>({
                 autoClose: 6000, //多长时间自动关闭，false为不关闭
             },
             showSnow: true, //是否开启雪花。开启后仅在暗黑模式下显示
-            showUserCard: false, //是否显示列表中的博主名片
+            showUserCard: true, //是否显示列表中的博主名片
             cardPosition: 3, //显示在第几个位置
             cardMusic: true, //是否显示播放音乐，音乐列表在上面 music中配置
             cardCoffee: true, //是否显示打赏咖啡，

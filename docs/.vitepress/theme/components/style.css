@@ -407,7 +407,7 @@ html, body {
 
 /* 将左右padding转移到内容区域，让footer能全屏显示 */
 .VPDoc .container {
-    padding: 0 32px !important;
+    padding: 0 20px !important;
     box-sizing: border-box !important;
 }
 
@@ -488,19 +488,24 @@ html, body {
 
 
 @media (min-width: 768px) {
+    .VPDoc .container {
+        padding: 0 20px !important;
+    }
+
     .VPDoc {
         padding: 48px 0 0 !important;
     }
 
-    /* 首页响应式特殊处理：移除 VPDoc 顶部 padding */
     .home .VPDoc {
         padding-top: 0 !important;
     }
-
-
 }
 
 @media (min-width: 960px) {
+    .VPDoc .container {
+        padding: 0 !important;
+    }
+
     /* PC端导航栏全屏显示 - 适用于所有页面和状态 */
     .VPNavBar .content-body,
     .VPNavBar:not(.top) .content-body,
