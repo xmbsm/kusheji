@@ -16,8 +16,7 @@ export const head: HeadConfig[] = [
     `var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?be0c041df7c9856964d365953f24eaca";
-      hm.async = true;
+      hm.src = "https://hm.baidu.com/hm.js?8808da6231820f5b8f686703365b6927";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();`

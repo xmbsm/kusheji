@@ -31,7 +31,7 @@
     <div class="entry" v-if="work?.via">
       <div class="githublink">
         <a class="a" :href="work?.via" target="_blank">
-          <strong class="strong">作品出处：</strong>
+          <strong class="strong">来源：</strong>
           <span class="span">{{ work?.via }}</span>
         </a>
       </div>

@@ -5,7 +5,7 @@
     <div class="postlist"
       :class="{ grid: listview === 'grid', list: listview === 'list', hasaside: frontmatter.aside, hassidebar: frontmatter.sidebar||theme?.sidebar?.length }">
       <div class="list" v-for="(article, index) in posts.slice(0, 4)" :key="index">
-        <ArticleList :article="article" />
+        <ArticleList :article="article" disable-modal />
       </div>
     </div>
   </div>

@@ -36,13 +36,12 @@ const { theme } = useData()
 // 定义文章属性
 const props = defineProps<{
   article?: Post
+  disableModal?: boolean
 }>();
 
-// 弹窗显示状态
 const modalVisible = ref(false)
 
-// 是否启用弹窗功能
-const showModal = computed(() => theme.value?.website?.showArticleModal !== false)
+const showModal = computed(() => !props.disableModal && theme.value?.website?.showArticleModal !== false)
 
 // 处理点击事件
 const handleClick = () => {

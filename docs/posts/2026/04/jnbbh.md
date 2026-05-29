@@ -39,7 +39,6 @@ externalLinkText: 直接下载
     view: 'https://qtx.lanzoul.com/iMvyg3m32iuj',
     github: '',
     via: 'https://github.com/maoken-fonts/KNBobohei',
-    linkpan:'https://github.com/maoken-fonts/KNBobohei',
     coveross: '',
     beecode: '',
     viewtit: '立即下载',
