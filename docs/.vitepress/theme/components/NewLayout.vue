@@ -1,6 +1,6 @@
 <template>
     <!-- 对页面布局做统筹管理 -->
-    <Layout :class="{ home: frontmatter?.index, post: frontmatter?.post, 'no-sidebar': frontmatter?.aside === false && !frontmatter?.index }">
+    <Layout :class="{ home: frontmatter?.index, post: frontmatter?.post, tools: frontmatter?.page === true && !frontmatter?.index && !frontmatter?.post, 'no-sidebar': frontmatter?.aside === false && !frontmatter?.index }">
         <template #not-found>
             <!-- 页面不存在 -->
                 <div class="page404">

@@ -6,13 +6,13 @@
             <div class="footer-nav">
                 <ul class="nav-list">
                     <li class="nav-item">
+                        <a class="nav-link" :href="withBase(`/pages/tools`)">工具导航</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" :href="withBase(`/pages/feed`)">订阅更新</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :href="withBase(`/pages/tools`)">友情链接</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :href="withBase(`/pages/about`)">关于本站</a>
+                        <a class="nav-link" :href="withBase(`/pages/about`)">关于</a>
                     </li>
                 </ul>
             </div>

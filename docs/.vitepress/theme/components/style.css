@@ -326,6 +326,17 @@ html, body {
         stroke-width: 2;
     }
 
+    /* 移除移动端搜索按钮点击时的蓝色描边 */
+    .VPNav .blog-search .nav-search-btn-wait:focus,
+    .VPNav .blog-search .nav-search-btn-wait:focus-visible,
+    .VPNav .blog-search .nav-search-btn-wait:active,
+    .VPNav .blog-search .nav-search-btn-wait:hover {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+
     /* 直接控制导航栏容器左对齐 */
     .VPNavBar .content-body {
         display: flex !important;
@@ -791,6 +802,14 @@ p.icons img {
 /* 隐藏无侧边栏页面的菜单栏 */
 .no-sidebar .VPLocalNav {
     display: none !important;
+}
+
+/* 移动端隐藏文章详情页和工具页的菜单按钮 */
+@media (max-width: 768px) {
+    .post .VPLocalNav .menu,
+    .tools .VPLocalNav .menu {
+        display: none !important;
+    }
 }
 
 /* 返回顶部按钮样式 */
