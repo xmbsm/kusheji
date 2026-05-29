@@ -481,6 +481,10 @@ html, body {
 .VPDoc.has-aside .content-container {
     max-width: 100% !important;
 }
+
+.VPDoc.has-sidebar .content-container {
+    max-width: 100% !important;
+}
 .fireworkwrap {
     display: none;
 }
@@ -741,6 +745,18 @@ p.icons img {
 /* 移除侧边栏宽度 */
 .VPDoc.has-sidebar {
     --vp-sidebar-width: 0px !important;
+}
+
+.VPContent.has-sidebar {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+@media (min-width: 1440px) {
+    .VPContent.has-sidebar {
+        padding-left: calc((100vw - var(--vp-layout-max-width)) / 2) !important;
+        padding-right: calc((100vw - var(--vp-layout-max-width)) / 2) !important;
+    }
 }
 
 .VPDoc.has-aside .content-container .main img {
