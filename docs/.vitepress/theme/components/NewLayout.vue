@@ -1,6 +1,6 @@
 <template>
     <!-- 对页面布局做统筹管理 -->
-    <Layout :class="{ home: frontmatter?.index }">
+    <Layout :class="{ home: frontmatter?.index, post: frontmatter?.post }">
         <template #not-found>
             <!-- 页面不存在 -->
                 <div class="page404">

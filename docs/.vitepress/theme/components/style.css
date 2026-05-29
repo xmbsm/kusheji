@@ -429,6 +429,15 @@ html, body {
     display: none !important;
 }
 
+/* aside目录为空时隐藏，避免占位 */
+.aside:not(:has(.has-outline)) {
+    display: none !important;
+}
+
+.VPDoc:not(.has-aside) .content-container {
+    max-width: 100% !important;
+}
+
 /* 确保左侧内容区域在没有侧边栏时能够完全填充宽度 */
 .home .VPDoc.has-aside {
     display: block !important;
@@ -508,6 +517,13 @@ html, body {
 @media (min-width: 960px) {
     .VPDoc .container {
         padding: 0 !important;
+    }
+
+    .post .VPDoc.has-aside .content-container,
+    .post .VPDoc.has-sidebar .content-container,
+    .post .VPDoc:not(.has-aside) .content-container {
+        max-width: 960px !important;
+        margin: 0 auto !important;
     }
 
     /* PC端导航栏全屏显示 - 适用于所有页面和状态 */
