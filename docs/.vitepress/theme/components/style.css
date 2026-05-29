@@ -322,8 +322,17 @@ html, body {
 
 /* 移动端导航栏样式：确保logo和名字在左侧显示 */
 @media (max-width: 768px) {
+    :root {
+        --vp-nav-height: 44px;
+    }
+
     .nav-search-btn-wait svg {
         stroke-width: 2;
+    }
+
+    .VPNav .blog-search .nav-search-btn-wait {
+        width: 40px;
+        height: 44px;
     }
 
     /* 移除移动端搜索按钮点击时的蓝色描边 */

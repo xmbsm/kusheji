@@ -255,6 +255,12 @@ const backToTopStyle = computed(() => ({
         }
     }
 
+    @media (max-width: 768px) {
+        .logo-link:hover {
+            color: var(--vp-c-text-1);
+        }
+    }
+
     .logo-img {
         width: 24px;
         height: 24px;
@@ -272,6 +278,7 @@ const backToTopStyle = computed(() => ({
             margin-right: auto !important;
             margin-left: 0 !important;
             justify-content: flex-start !important;
+            height: 44px;
         }
     }
 
