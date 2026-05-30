@@ -3,6 +3,24 @@
   <Teleport to="body">
     <Transition name="modal-fade">
       <div v-if="visible" class="article-modal-overlay" @click.self="closeModal">
+        <!-- 左侧切换区域 -->
+        <div class="article-nav-zone article-nav-prev" @click.stop="prevArticle" v-if="hasPrev">
+          <div class="nav-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 右侧切换区域 -->
+        <div class="article-nav-zone article-nav-next" @click.stop="nextArticle" v-if="hasNext">
+          <div class="nav-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </div>
+
         <Transition name="modal-scale">
           <div v-if="visible" class="article-modal-container">
             <!-- 关闭按钮 -->
@@ -17,10 +35,10 @@
               <!-- 左侧图片区域 -->
               <div class="modal-image-section">
                 <!-- 多张图片轮播 -->
-                <template v-if="article?.images && article.images.length > 1">
+                <template v-if="activeArticle?.images && activeArticle.images.length > 1">
                   <img 
-                    :src="article.images[currentImageIndex]" 
-                    :alt="article?.frontmatter?.title" 
+                    :src="activeArticle.images[currentImageIndex]" 
+                    :alt="activeArticle?.frontmatter?.title" 
                     class="modal-image" 
                   />
                   <!-- 左右切换箭头 -->
@@ -37,7 +55,7 @@
                   <!-- 图片指示器 -->
                   <div class="image-indicators">
                     <span 
-                      v-for="(img, index) in article.images" 
+                      v-for="(img, index) in activeArticle.images" 
                       :key="index"
                       class="indicator"
                       :class="{ active: currentImageIndex === index }"
@@ -47,7 +65,7 @@
                 </template>
                 <!-- 单张图片 -->
                 <template v-else>
-                  <img :src="article?.frontmatter?.cover" :alt="article?.frontmatter?.title" class="modal-image" />
+                  <img :src="activeArticle?.frontmatter?.cover" :alt="activeArticle?.frontmatter?.title" class="modal-image" />
                 </template>
                 <div class="image-overlay"></div>
               </div>
@@ -55,32 +73,32 @@
               <!-- 右侧内容区域 -->
               <div class="modal-info-section">
                 <div class="info-header">
-                  <h2 class="modal-title">{{ article?.frontmatter?.title }}</h2>
+                  <h2 class="modal-title">{{ activeArticle?.frontmatter?.title }}</h2>
                   <div class="modal-meta">
                     <ClientOnly>
-                      <ArticleMetadata :article="article" />
+                      <ArticleMetadata :article="activeArticle" />
                     </ClientOnly>
                   </div>
                 </div>
 
                 <div class="info-body">
-                  <div class="modal-desc" v-html="article?.frontmatter?.description"></div>
+                  <div class="modal-desc" v-html="activeArticle?.frontmatter?.description"></div>
 
                   <!-- 分类和标签显示 -->
-                  <div class="modal-meta-row" v-if="article?.frontmatter?.categories?.length || article?.frontmatter?.tags?.length">
+                  <div class="modal-meta-row" v-if="activeArticle?.frontmatter?.categories?.length || activeArticle?.frontmatter?.tags?.length">
                     <!-- 分类 -->
-                    <div class="modal-categories-inline" v-if="article?.frontmatter?.categories?.length">
+                    <div class="modal-categories-inline" v-if="activeArticle?.frontmatter?.categories?.length">
                       <span class="cat-label">分类</span>
                       <div class="cats-list">
-                        <span v-for="cat in article.frontmatter.categories" :key="cat" class="cat-item">{{ cat }}</span>
+                        <span v-for="cat in activeArticle.frontmatter.categories" :key="cat" class="cat-item">{{ cat }}</span>
                       </div>
                     </div>
 
                     <!-- 标签 -->
-                    <div class="modal-tags-inline" v-if="article?.frontmatter?.tags?.length">
+                    <div class="modal-tags-inline" v-if="activeArticle?.frontmatter?.tags?.length">
                       <span class="tag-label">标签</span>
                       <div class="tags-list">
-                        <span v-for="tag in article.frontmatter.tags" :key="tag" class="tag-item">{{ tag }}</span>
+                        <span v-for="tag in activeArticle.frontmatter.tags" :key="tag" class="tag-item">{{ tag }}</span>
                       </div>
                     </div>
                   </div>
@@ -88,7 +106,7 @@
 
                 <div class="info-footer">
                   <div class="modal-actions">
-                    <a :href="withBase(article?.relativePath || '')" class="modal-btn modal-btn-secondary">
+                    <a :href="withBase(activeArticle?.relativePath || '')" class="modal-btn modal-btn-secondary">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <polyline points="14 2 14 8 20 8"></polyline>
@@ -98,14 +116,14 @@
                       </svg>
                       阅读全文
                     </a>
-                    <a :href="article?.frontmatter?.externalLink || article?.frontmatter?.github || article?.frontmatter?.view || '#'"
+                    <a :href="activeArticle?.frontmatter?.externalLink || activeArticle?.frontmatter?.github || activeArticle?.frontmatter?.view || '#'"
                        target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-primary">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                         <polyline points="15 3 21 3 21 9"></polyline>
                         <line x1="10" y1="14" x2="21" y2="3"></line>
                       </svg>
-                      {{ article?.frontmatter?.externalLinkText || article?.frontmatter?.githubText || article?.frontmatter?.viewText || '直接下载' }}
+                      {{ activeArticle?.frontmatter?.externalLinkText || activeArticle?.frontmatter?.githubText || activeArticle?.frontmatter?.viewText || '直接下载' }}
                     </a>
                   </div>
                 </div>
@@ -120,13 +138,15 @@
 
 <script lang="ts" setup>
 import { withBase } from 'vitepress'
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import ArticleMetadata from './ArticleMetadata.vue'
 import type { Post } from '../types'
 
 const props = defineProps<{
   visible: boolean
   article?: Post
+  posts?: Post[]
+  currentIndex?: number
 }>()
 
 const emit = defineEmits<{
@@ -134,39 +154,68 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
+const activeIndex = ref(props.currentIndex ?? 0)
+
+const activeArticle = computed(() => {
+  if (props.posts && props.posts.length > 0) {
+    return props.posts[activeIndex.value]
+  }
+  return props.article
+})
+
+const hasPrev = computed(() => props.posts && props.posts.length > 1 && activeIndex.value > 0)
+const hasNext = computed(() => props.posts && props.posts.length > 1 && activeIndex.value < props.posts.length - 1)
+
+const prevArticle = () => {
+  if (hasPrev.value) {
+    activeIndex.value--
+    currentImageIndex.value = 0
+  }
+}
+
+const nextArticle = () => {
+  if (hasNext.value) {
+    activeIndex.value++
+    currentImageIndex.value = 0
+  }
+}
+
 const closeModal = () => {
   emit('update:visible', false)
   emit('close')
 }
 
-// 图片轮播相关
 const currentImageIndex = ref(0)
 
 const prevImage = () => {
-  if (!props.article?.images) return
-  currentImageIndex.value = (currentImageIndex.value - 1 + props.article.images.length) % props.article.images.length
+  if (!activeArticle.value?.images) return
+  currentImageIndex.value = (currentImageIndex.value - 1 + activeArticle.value.images.length) % activeArticle.value.images.length
 }
 
 const nextImage = () => {
-  if (!props.article?.images) return
-  currentImageIndex.value = (currentImageIndex.value + 1) % props.article.images.length
+  if (!activeArticle.value?.images) return
+  currentImageIndex.value = (currentImageIndex.value + 1) % activeArticle.value.images.length
 }
 
 const goToImage = (index: number) => {
   currentImageIndex.value = index
 }
 
-// 当弹窗打开时重置图片索引
 watch(() => props.visible, (newVal) => {
   if (newVal) {
+    activeIndex.value = props.currentIndex ?? 0
     currentImageIndex.value = 0
   }
 })
 
-// ESC键关闭弹窗
 const handleKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape' && props.visible) {
+  if (!props.visible) return
+  if (e.key === 'Escape') {
     closeModal()
+  } else if (e.key === 'ArrowLeft') {
+    prevArticle()
+  } else if (e.key === 'ArrowRight') {
+    nextArticle()
   }
 }
 
@@ -194,6 +243,48 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   padding: 20px;
+}
+
+/* 文章切换区域 */
+.article-nav-zone {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10000;
+  transition: background 0.2s ease;
+}
+
+.article-nav-zone:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.article-nav-prev {
+  left: 0;
+}
+
+.article-nav-next {
+  right: 0;
+}
+
+.nav-arrow {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.article-nav-zone:hover .nav-arrow {
+  opacity: 1;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* 弹窗容器 */
@@ -500,10 +591,20 @@ onUnmounted(() => {
 }
 
 /* 响应式 */
+@media screen and (max-width: 1024px) {
+  .article-nav-zone {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .article-modal-overlay {
     padding: 0;
     align-items: flex-end;
+  }
+
+  .article-nav-zone {
+    display: none;
   }
 
   .article-modal-container {

@@ -10,7 +10,7 @@
             </div>
             <div class="list">
                 <ClientOnly>
-                    <ArticleList :article="article" />
+                    <ArticleList :article="article" :posts="posts" :index="index" />
                 </ClientOnly>
             </div>
             <div class="list" v-if="theme.website?.showUserCard &&index == Number(theme.website?.cardPosition)-2">

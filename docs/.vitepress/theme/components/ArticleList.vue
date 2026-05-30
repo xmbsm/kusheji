@@ -21,7 +21,7 @@
     </div>
 
     <!-- 文章详情弹窗（仅在启用弹窗功能时显示） -->
-    <ArticleModal v-if="showModal" v-model:visible="modalVisible" :article="article" @close="modalVisible = false" />
+    <ArticleModal v-if="showModal" v-model:visible="modalVisible" :article="article" :posts="posts" :current-index="index" @close="modalVisible = false" />
   </div>
 </template>
 
@@ -36,6 +36,8 @@ const { theme } = useData()
 // 定义文章属性
 const props = defineProps<{
   article?: Post
+  posts?: Post[]
+  index?: number
   disableModal?: boolean
 }>();
 
