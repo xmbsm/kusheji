@@ -505,7 +505,7 @@ onUnmounted(() => {
 .cat-item {
   padding: 4px 12px;
   border-radius: 20px;
-  font-size: 12px;
+    font-size: 12px;
   background: #f6f6f7;
   color: #333;
   border: none;
@@ -531,7 +531,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 6px;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 999px;
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
@@ -558,7 +558,7 @@ onUnmounted(() => {
 .modal-btn-secondary {
   background: var(--vp-c-bg-alt);
   color: var(--vp-c-text-1);
-  border: 1px solid var(--vp-c-divider);
+  border: none;
 }
 
 .modal-btn-secondary:hover {
