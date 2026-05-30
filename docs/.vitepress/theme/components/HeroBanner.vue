@@ -263,7 +263,7 @@ onMounted(() => {
   gap: 6px;
   color: white;
   text-decoration: none;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   padding: 8px 14px;
   border-radius: 30px;
@@ -271,7 +271,7 @@ onMounted(() => {
 }
 
 .post-link:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .link-icon {
