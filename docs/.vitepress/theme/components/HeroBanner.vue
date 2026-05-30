@@ -133,6 +133,11 @@ onMounted(() => {
   z-index: 10;
   text-align: center;
   color: white;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin-bottom: 50px;
 }
 
 .hero-header {
@@ -169,8 +174,10 @@ onMounted(() => {
   justify-content: space-between;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 40px;
-  padding: 8px 15px 8px 20px;
+  padding: 0 15px 0 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 60px;
 }
 
 .search-icon {
