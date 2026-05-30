@@ -300,7 +300,7 @@ onMounted(() => {
   }
   
   .hero-title {
-    font-size: 32px;
+    font-size: 36px;
   }
   
   .hero-description {
@@ -308,7 +308,8 @@ onMounted(() => {
   }
   
   .search-container {
-    padding: 6px 16px;
+    padding: 0 16px;
+    height: 50px;
   }
   
   .hero-post-info {
