@@ -326,6 +326,16 @@ html, body {
         --vp-nav-height: 44px;
     }
 
+    .VPNavBar {
+        background-color: var(--bgfilter) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+
+    .VPNavBar .content-body {
+        background-color: transparent !important;
+    }
+
     .nav-search-btn-wait svg {
         stroke-width: 2;
     }
@@ -380,11 +390,11 @@ html, body {
     --vp-layout-max-width: 1280px;   /*设置为1280px*/
     --swiper-theme-color: var(--vp-c-brand);
     --fancybox-accent-color: var(--vp-c-brand-1);
-    --bgfilter: rgba(255,255,255,.9);
+    --bgfilter: rgba(255,255,255,.75);
 }
 
 .dark {
-    --bgfilter: rgba(27,27,31,.9);
+    --bgfilter: rgba(27,27,31,.75);
 }
 
 [aria-label="red"] {
@@ -552,12 +562,17 @@ html, body {
     }
 
     /* PC端导航栏全屏显示 - 适用于所有页面和状态 */
+    .VPNavBar {
+        background-color: var(--bgfilter) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+
     .VPNavBar .content-body,
     .VPNavBar:not(.top) .content-body,
     .VPNavBar.top .content-body {
         position: relative;
-        background-color: var(--bgfilter)!important;
-        backdrop-filter:blur(8px);
+        background-color: transparent !important;
         max-width: 100% !important;
         width: 100% !important;
         padding: 0 32px !important;
