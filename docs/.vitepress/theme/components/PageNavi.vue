@@ -113,7 +113,7 @@ import { initCats } from '../functions'
 import { data as themeposts } from '../posts.data'
 import Brands from './Brands.vue'
 import BrandFilter from './BrandFilter.vue'
-let url = window.location.href.split('?')[1]
+let url = typeof window !== 'undefined' ? window.location.href.split('?')[1] : ''
 let params = new URLSearchParams(url)
 const { page } = useData()
 const data = computed(() => initCats(themeposts))

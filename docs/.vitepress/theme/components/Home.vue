@@ -17,9 +17,9 @@ import { toast, type ToastOptions } from 'vue3-toastify';
 import Welcome from "../../theme/components/Welcome.vue";
 import Page from "../../theme/components/Page.vue";
 const { theme } = useData();
-const welcomestate = useStorage('weclome', false, sessionStorage)
+const welcomestate = useStorage('weclome', false, typeof window !== 'undefined' ? sessionStorage : undefined)
 const router = useRouter()
-const location = useBrowserLocation()
+const location = typeof window !== 'undefined' ? useBrowserLocation() : ref({} as any)
 const activeTag = ref('')
 const activeCategory = ref('')
 const activeYear = ref('')
@@ -78,6 +78,7 @@ const getposts = computed(() => {
 })
 
 const pageChange = (e: any) => {
+  if (typeof window === 'undefined') return
   currentpage.value = e
   const { searchParams } = new URL(window.location.href!)
   searchParams.delete('page')
@@ -88,7 +89,7 @@ const pageChange = (e: any) => {
 }
 
 router.onBeforeRouteChange = (to) => {
-  
+  if (typeof window === 'undefined') return to
   const url = new URL(to, window.location.origin)
   const params = formatSearch(url.search)
   activeTag.value = params?.tag || ''

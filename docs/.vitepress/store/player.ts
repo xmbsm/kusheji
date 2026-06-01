@@ -6,7 +6,7 @@ import {getRandomInt} from '../theme/functions'
 import { toast, type ToastOptions } from 'vue3-toastify';
 export const usePlayerStore = defineStore('Player', () => {
     // State
-    const audio = new Audio();   // Audio实例
+    const audio: HTMLAudioElement = typeof window !== 'undefined' ? new Audio() : ({} as HTMLAudioElement)
     const loopType = ref(0); // 循环模式 0 列表循环 1 单曲循环 2随机播放
     const playList = ref<Song[]>([]); // 播放列表
     const showPlayList = ref(false); // 播放列表显隐

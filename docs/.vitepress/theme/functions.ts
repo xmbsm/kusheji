@@ -234,7 +234,7 @@ export const getGithub = async (name: any) => {
 // 通用复制提示方式
 export function handleCopy(text: string) {
     let copied = false;
-    if (navigator.clipboard && window.isSecureContext) {
+    if (typeof window !== 'undefined' && navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(() => {
             toast("复制成功", {
                 autoClose: 2000,

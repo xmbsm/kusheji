@@ -45,10 +45,11 @@
         </template>
         <template #sidebar-nav-before>
             <!-- <PageNavi /> -->
-           
+            <ClientOnly>
                 <div class="fireworkwrap">
                     <Firework></Firework>
                 </div>
+            </ClientOnly>
         </template>
         <template #doc-top>
             <ClientOnly>

@@ -27,18 +27,18 @@
         <div class="tags" v-if="dataSource.frontmatter?.tags && type === 'single'">
           <template v-if="type !== 'single'">
             <span class="tag" v-for="item in dataSource.frontmatter.tags.slice(0, 2)"><a class="a"
-                :href="withBase(`/?tag=${item.toString()}`)"> {{
+                :href="withBase(`/?tag=${item}`)"> {{
                   '#' + item }}</a></span>
             <span class="tag" v-if="dataSource.frontmatter.tags.length > 2">...</span>
           </template>
           <template v-else>
-            <span class="tag" v-for="item in dataSource.frontmatter.tags"><a class="a" :href="withBase(`/?tag=${item.toString()}`)"> {{
+            <span class="tag" v-for="item in dataSource.frontmatter.tags"><a class="a" :href="withBase(`/?tag=${item}`)"> {{
               '#' + item }}</a></span>
           </template>
         </div>
         <!-- 品牌部分 -->
       <div class="brands" v-if="type === 'single' && (dataSource.frontmatter?.brands || dataSource.frontmatter?.brand)">
-        <span class="brand" v-for="item in (dataSource.frontmatter.brands || (Array.isArray(dataSource.frontmatter.brand) ? dataSource.frontmatter.brand : [dataSource.frontmatter.brand]))"><a class="a" :href="withBase(`/?brand=${item.toString()}`)"> {{
+        <span class="brand" v-for="item in (dataSource.frontmatter.brands || (Array.isArray(dataSource.frontmatter.brand) ? dataSource.frontmatter.brand : [dataSource.frontmatter.brand]))"><a class="a" :href="withBase(`/?brand=${item}`)"> {{
               item }}</a></span>
       </div>
       </div>

@@ -115,6 +115,7 @@ const handleArticleClick = (article: Post) => {
 
 // 从 URL 参数获取搜索关键词
 const getKeywordFromUrl = () => {
+  if (typeof window === 'undefined') return ''
   const url = new URL(window.location.href)
   return url.searchParams.get('search') || ''
 }

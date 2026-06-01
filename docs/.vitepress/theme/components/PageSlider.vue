@@ -155,6 +155,7 @@ const lanternText = ref(['新', '年'])
 const defaultDate = '2024/02/09 20:00'
 
 function getUntilDate() {
+    if (typeof location === 'undefined') return defaultDate
     const param = new URL(location.href).searchParams.get('until') || defaultDate
     if (/\d{8}/.test(param))
         return `${param.substring(0, 4)}/${param.substring(4, 6)}/${param.substring(6, 8)}`
