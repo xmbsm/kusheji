@@ -280,9 +280,10 @@ watch(
 
 @media screen and (max-width: 768px) {
   .page_ul li {
-    .pa:not(.active):hover {
-      border-color: #f1f1f1;
-      background-color: #f1f1f1;
+    .pa:not(.active):hover,
+    .pa:not(.active):active {
+      border-color: var(--vp-c-divider-light);
+      background-color: transparent;
       color: inherit;
     }
   }
