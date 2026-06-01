@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useData, withBase } from 'vitepress'
 import { data as themeposts } from '../posts.data'
 
@@ -65,6 +65,23 @@ const { theme } = useData()
 const searchQuery = ref('')
 
 const randomPost = ref<any>(null)
+
+const isMobile = ref(false)
+
+const checkMobile = () => {
+  isMobile.value = typeof window !== 'undefined' && window.innerWidth <= 768
+}
+
+if (typeof window !== 'undefined') {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+}
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', checkMobile)
+  }
+})
 
 const hotTags = computed(() => {
   const tags: string[] = []
@@ -77,7 +94,7 @@ const hotTags = computed(() => {
       })
     }
   })
-  return tags.slice(0, 6)
+  return tags.slice(0, isMobile.value ? 3 : 6)
 })
 
 const getPostUrl = (post: any) => {

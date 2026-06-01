@@ -39,6 +39,14 @@ function closeDropdown(event: Event) {
     padding: 20px;
 }
 
+@media (max-width: 960px) {
+    .wrap {
+        min-width: 100%;
+        max-width: 100%;
+        max-height: none;
+    }
+}
+
 .brandfilter {
     display: flex;
     flex-direction: row;

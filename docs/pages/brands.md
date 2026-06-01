@@ -1,7 +1,7 @@
 ---
 page: true
-title: 品牌
-description: 对内容的品牌做统一管理
+title: 专辑
+description: 按专辑分类浏览所有资源
 aside: false
 ---
 
