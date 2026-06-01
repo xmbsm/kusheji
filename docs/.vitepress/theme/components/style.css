@@ -868,19 +868,14 @@ p.icons img {
     justify-content: center !important;
     cursor: pointer !important;
     z-index: 999999 !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: none !important;
     transition: all 0.3s ease !important;
-    opacity: 0.9 !important;
-    pointer-events: auto !important;
-    transform: translateY(0) !important;
     font-size: 24px !important;
     font-weight: bold !important;
 }
 
 #back-to-top:hover {
     background-color: #e0e0e0 !important;
-    transform: translateY(-3px) !important;
-    opacity: 1 !important;
 }
 
 /* 响应式调整 */

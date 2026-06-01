@@ -134,11 +134,11 @@ watch(() => route.path, () => {
 })
 
 // 滚动状态
-const isScrolled = ref(false);
+const showBackToTop = ref(false);
+let lastScrollY = 0;
 
-// 滚动事件处理
 onMounted(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 });
 
 onUnmounted(() => {
@@ -146,16 +146,19 @@ onUnmounted(() => {
 });
 
 function handleScroll() {
-    isScrolled.value = window.scrollY > 500;
+    const currentY = window.scrollY;
+    if (currentY <= 300) {
+        showBackToTop.value = false;
+    } else {
+        showBackToTop.value = currentY < lastScrollY;
+    }
+    lastScrollY = currentY;
 }
 
-// 返回顶部方法
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // 滚动状态会通过handleScroll函数自动更新
 }
 
-// 响应式样式
 const backToTopStyle = computed(() => ({
     position: 'fixed',
     bottom: '30px',
@@ -173,9 +176,9 @@ const backToTopStyle = computed(() => ({
     boxShadow: 'none',
     fontSize: '24px',
     fontWeight: 'bold',
-    opacity: isScrolled.value ? '1' : '0',
-    pointerEvents: isScrolled.value ? 'auto' : 'none',
-    transform: isScrolled.value ? 'translateY(0)' : 'translateY(20px)',
+    opacity: showBackToTop.value ? '1' : '0',
+    pointerEvents: showBackToTop.value ? 'auto' : 'none',
+    transform: showBackToTop.value ? 'translateY(0)' : 'translateY(20px)',
     transition: 'all 0.3s ease'
 }));
 </script>

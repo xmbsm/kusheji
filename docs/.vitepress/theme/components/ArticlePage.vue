@@ -10,7 +10,7 @@
       <li class="li">
         <a class="pa" :class="curPage == 1 ? 'disable' : ''" @click="goPage(curPage - 1)">上一页</a>
       </li>
-      <li class="li" v-for="(page, index) in pages" :key="index">
+      <li class="li" v-for="(page, index) in pages" :key="page">
         <a class="pa" :class="{ active: curPage == page }" @click="goPage(page)">{{ page }}</a>
       </li>
       <li class="li">
@@ -236,8 +236,8 @@ watch(
       pointer-events: none;
     }
 
-    &:not(.disable):hover,
-    &:not(.disable):active {
+    &:not(.disable):not(.active):hover,
+    &:not(.disable):not(.active):active {
       color: var(--vp-c-brand);
     }
 
@@ -280,8 +280,8 @@ watch(
 
 @media screen and (max-width: 768px) {
   .page_ul li {
-    .pa:not(.active):hover,
-    .pa:not(.active):active {
+    .pa:not(.disable):not(.active):hover,
+    .pa:not(.disable):not(.active):active {
       border-color: var(--vp-c-divider-light);
       background-color: transparent;
       color: inherit;
