@@ -8,7 +8,7 @@
   
 </template>
 <script lang="ts" setup>
-import { computed, ref, onMounted, nextTick, watch } from 'vue'
+import { computed, ref, onMounted, onUnmounted, nextTick, watch, provide } from 'vue'
 import { useBrowserLocation, useStorage } from '@vueuse/core'
 import { useData,useRouter } from 'vitepress'
 import { data as themeposts } from '../posts.data'
@@ -34,6 +34,33 @@ const selectAlbum = computed(() => (activeAlbum.value))
 const selectBrandFilter = computed(() => (activeBrandFilter.value))
 const bread = ref('全部内容')
 const breadrxt = computed(() => (bread.value))
+
+provide('activeCategory', activeCategory)
+
+provide('setFilter', (key: string, value: string) => {
+  currentpage.value = 1
+  if (key === 'category') {
+    activeCategory.value = value
+    activeTag.value = ''
+    activeYear.value = ''
+    activeMonth.value = ''
+    activeAlbum.value = ''
+    activeBrandFilter.value = ''
+    bread.value = value ? '分类：' + value : '全部内容'
+  }
+  if (typeof window !== 'undefined') {
+    const url = new URL(window.location.href)
+    url.searchParams.delete('category')
+    url.searchParams.delete('tag')
+    url.searchParams.delete('brand')
+    url.searchParams.delete('album')
+    url.searchParams.delete('year')
+    url.searchParams.delete('month')
+    url.searchParams.delete('page')
+    if (value) url.searchParams.set(key, value)
+    history.pushState(null, '', url.toString())
+  }
+})
 const posts = computed(() => {
   if (selectCategory.value) {
     return themeposts.filter((article: any) =>
@@ -152,6 +179,7 @@ watch(
   }
 )
 onMounted(() => {
+  window.addEventListener('popstate', handlePopState)
   if (theme.value?.website?.showWelcome&&((theme.value?.website?.welcomeusestate&&!welcomestate.value) || !theme.value?.website?.welcomeusestate)) {
     nextTick(() => {
       toast(Welcome, {
@@ -165,6 +193,36 @@ onMounted(() => {
     });
   }
 });
+
+const handlePopState = () => {
+  const url = new URL(window.location.href)
+  activeCategory.value = url.searchParams.get('category') || ''
+  activeTag.value = url.searchParams.get('tag') || ''
+  activeYear.value = url.searchParams.get('year') || ''
+  activeMonth.value = url.searchParams.get('month') || ''
+  activeAlbum.value = url.searchParams.get('album') || ''
+  activeBrandFilter.value = url.searchParams.get('brand') || ''
+  currentpage.value = Number(url.searchParams.get('page')) || 1
+  if (activeTag.value) {
+    bread.value = '标签：' + activeTag.value
+  } else if (activeCategory.value) {
+    bread.value = '分类：' + activeCategory.value
+  } else if (activeBrandFilter.value) {
+    bread.value = '品牌：' + activeBrandFilter.value
+  } else if (activeAlbum.value) {
+    bread.value = '专辑：' + activeAlbum.value
+  } else if (activeYear.value && activeMonth.value) {
+    bread.value = '存档：' + activeYear.value + '/' + activeMonth.value
+  } else if (activeYear.value) {
+    bread.value = '存档：' + activeYear.value
+  } else {
+    bread.value = '全部内容'
+  }
+}
+
+onUnmounted(() => {
+  window.removeEventListener('popstate', handlePopState)
+})
 </script>
 <style>
 .Toastify__toast {

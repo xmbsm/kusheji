@@ -55,28 +55,30 @@
   <!-- 顶部导航栏菜单 -->
   <div class="mainnavi header" v-else-if="type==='header'">
     <ul class="ul">
-      <li class="li" @click="choose('home')"
-        :class="{ on: (page.relativePath == 'index.md' && selected === '' && !params.get('category') && !params.get('tag')) || selected === 'home' }">
-        <a class="a" :href="withBase(`/`)">首页</a>
+      <li class="li" @click="choose('home'); goHome()"
+        :class="{ on: isHome }">
+        <span class="a">全部</span>
       </li>
-      <li class="li" @click="choose(String(key))"
-        :class="{ on: (params.get('category') === String(key) && selected === '') || selected === String(key) }"
-        v-for="(item, key) in data"><a class="a" :href="withBase(`/?category=${String(key)}`)">{{ key }}<strong
-            class="VPBadge tip strong mini">{{ data[key].length }}</strong></a></li>
+      <li class="li" v-for="(item, key) in data" @click="choose(String(key)); goCategory(String(key))"
+        :class="{ on: currentCategory === String(key) || selected === String(key) }">
+        <span class="a">{{ key }}<strong
+            class="VPBadge tip strong mini">{{ data[key].length }}</strong></span>
+      </li>
     </ul>
   </div>
   
   <!-- 左侧边栏菜单 -->
   <div class="mainnavi left" v-else>
     <ul class="ul">
-      <li class="li" @click="choose('home')"
-        :class="{ on: (page.relativePath == 'index.md' && selected === '' && !params.get('category') && !params.get('tag')) || selected === 'home' }">
-        <a class="a" :href="withBase(`/`)">全部</a>
+      <li class="li" @click="choose('home'); goHome()"
+        :class="{ on: isHome }">
+        <span class="a">全部</span>
       </li>
-      <li class="li" @click="choose(String(key))"
-        :class="{ on: (params.get('category') === String(key) && selected === '') || selected === String(key) }"
-        v-for="(item, key) in data"><a class="a" :href="withBase(`/?category=${String(key)}`)">{{ key }}<strong
-            class="VPBadge tip strong mini">{{ data[key].length }}</strong></a></li>
+      <li class="li" v-for="(item, key) in data" @click="choose(String(key)); goCategory(String(key))"
+        :class="{ on: currentCategory === String(key) || selected === String(key) }">
+        <span class="a">{{ key }}<strong
+            class="VPBadge tip strong mini">{{ data[key].length }}</strong></span>
+      </li>
     </ul>
     <h4 class="h4"><svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path
@@ -107,8 +109,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useData, withBase } from 'vitepress'
+import { computed, ref, inject } from 'vue'
+import { useData, withBase, useRouter } from 'vitepress'
 import { initCats } from '../functions'
 import { data as themeposts } from '../posts.data'
 import Brands from './Brands.vue'
@@ -116,6 +118,7 @@ import BrandFilter from './BrandFilter.vue'
 let url = typeof window !== 'undefined' ? window.location.href.split('?')[1] : ''
 let params = new URLSearchParams(url)
 const { page } = useData()
+const router = useRouter()
 const data = computed(() => initCats(themeposts))
 const props = defineProps<{
   type?: string
@@ -123,6 +126,21 @@ const props = defineProps<{
 const selected = ref('')
 const choose = (e: string) => {
   selected.value = e
+}
+
+const setFilter = inject<(key: string, value: string) => void>('setFilter', () => {})
+const currentCategory = inject<import('vue').Ref<string>>('activeCategory', ref(''))
+
+const isHome = computed(() => {
+  return (page.relativePath == 'index.md' && !currentCategory.value && !params.get('tag')) || selected === 'home'
+})
+
+const goCategory = (category: string) => {
+  setFilter('category', category)
+}
+
+const goHome = () => {
+  setFilter('category', '')
 }
 
 </script>
@@ -185,7 +203,6 @@ const choose = (e: string) => {
 
       .a {
         padding: 0;
-        /* color: #ffffff; */
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -194,8 +211,8 @@ const choose = (e: string) => {
         line-height: 1;
         transform: translateX(0px);
         transition: .3s;
-        width: 100%;
         cursor: pointer;
+        width: 100%;
       }
 
       .svg {
