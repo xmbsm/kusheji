@@ -71,7 +71,7 @@
     <ul class="ul">
       <li class="li" @click="choose('home')"
         :class="{ on: (page.relativePath == 'index.md' && selected === '' && !params.get('category') && !params.get('tag')) || selected === 'home' }">
-        <a class="a" :href="withBase(`/`)">首页</a>
+        <a class="a" :href="withBase(`/`)">全部</a>
       </li>
       <li class="li" @click="choose(String(key))"
         :class="{ on: (params.get('category') === String(key) && selected === '') || selected === String(key) }"
