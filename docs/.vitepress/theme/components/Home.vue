@@ -182,15 +182,18 @@ const pageChange = (e: any) => {
 }
 
 router.onAfterRouteChanged = (to) => {
-  if (isPageChange.value) {
-    nextTick(() => {
+  nextTick(() => {
+    if (isPageChange.value) {
+      isPageChange.value = false
+    }
+    const url = new URL(to, window.location.origin)
+    if (url.searchParams.get('tag') || url.searchParams.get('brand') || url.searchParams.get('album') || url.searchParams.get('year') || url.searchParams.get('category')) {
       const banner = document.querySelector('.hero-banner')
       if (banner) {
         window.scrollTo({ top: banner.offsetTop + banner.offsetHeight, behavior: 'smooth' })
       }
-      isPageChange.value = false
-    })
-  }
+    }
+  })
 }
 
 router.onBeforeRouteChange = (to) => {
@@ -258,6 +261,16 @@ watch(
 )
 onMounted(() => {
   window.addEventListener('popstate', handlePopState)
+  // 如果 URL 带筛选参数，滚动到 hero-banner 下方
+  const url = new URL(window.location.href)
+  if (url.searchParams.get('tag') || url.searchParams.get('brand') || url.searchParams.get('album') || url.searchParams.get('year') || url.searchParams.get('category')) {
+    nextTick(() => {
+      const banner = document.querySelector('.hero-banner')
+      if (banner) {
+        window.scrollTo({ top: banner.offsetTop + banner.offsetHeight, behavior: 'smooth' })
+      }
+    })
+  }
   if (theme.value?.website?.showWelcome&&((theme.value?.website?.welcomeusestate&&!welcomestate.value) || !theme.value?.website?.welcomeusestate)) {
     nextTick(() => {
       toast(Welcome, {
