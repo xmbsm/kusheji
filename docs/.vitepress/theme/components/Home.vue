@@ -104,8 +104,11 @@ const getposts = computed(() => {
   return posts.value.slice(per_page.value * (currentpage.value - 1), per_page.value * currentpage.value) //获取当前第几页的的文章集合
 })
 
+const isPageChange = ref(false)
+
 const pageChange = (e: any) => {
   if (typeof window === 'undefined') return
+  isPageChange.value = true
   currentpage.value = e
   const { searchParams } = new URL(window.location.href!)
   searchParams.delete('page')
@@ -113,6 +116,18 @@ const pageChange = (e: any) => {
   router.go(
     `${location.value.origin}${router.route.path}?${searchParams.toString()}`
   )
+}
+
+router.onAfterRouteChanged = (to) => {
+  if (isPageChange.value) {
+    nextTick(() => {
+      const banner = document.querySelector('.hero-banner')
+      if (banner) {
+        window.scrollTo({ top: banner.offsetTop + banner.offsetHeight, behavior: 'smooth' })
+      }
+      isPageChange.value = false
+    })
+  }
 }
 
 router.onBeforeRouteChange = (to) => {

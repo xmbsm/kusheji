@@ -110,19 +110,15 @@
 
 <script lang="ts" setup>
 import { computed, ref, inject } from 'vue'
-import { useData, withBase, useRouter } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 import { initCats } from '../functions'
 import { data as themeposts } from '../posts.data'
 import Brands from './Brands.vue'
 import BrandFilter from './BrandFilter.vue'
-let url = typeof window !== 'undefined' ? window.location.href.split('?')[1] : ''
-let params = new URLSearchParams(url)
+
 const { page } = useData()
-const router = useRouter()
 const data = computed(() => initCats(themeposts))
-const props = defineProps<{
-  type?: string
-}>();
+const props = defineProps<{ type?: string }>();
 const selected = ref('')
 const choose = (e: string) => {
   selected.value = e
@@ -132,7 +128,7 @@ const setFilter = inject<(key: string, value: string) => void>('setFilter', () =
 const currentCategory = inject<import('vue').Ref<string>>('activeCategory', ref(''))
 
 const isHome = computed(() => {
-  return (page.relativePath == 'index.md' && !currentCategory.value && !params.get('tag')) || selected === 'home'
+  return !currentCategory.value
 })
 
 const goCategory = (category: string) => {
