@@ -47,6 +47,54 @@ provide('setFilter', (key: string, value: string) => {
     activeAlbum.value = ''
     activeBrandFilter.value = ''
     bread.value = value ? '分类：' + value : '全部内容'
+  } else if (key === 'tag') {
+    activeTag.value = value
+    activeCategory.value = ''
+    activeYear.value = ''
+    activeMonth.value = ''
+    activeAlbum.value = ''
+    activeBrandFilter.value = ''
+    bread.value = '标签：' + value
+  } else if (key === 'brand') {
+    activeBrandFilter.value = value
+    activeCategory.value = ''
+    activeTag.value = ''
+    activeYear.value = ''
+    activeMonth.value = ''
+    activeAlbum.value = ''
+    bread.value = '品牌：' + value
+  } else if (key === 'album') {
+    activeAlbum.value = value
+    activeCategory.value = ''
+    activeTag.value = ''
+    activeYear.value = ''
+    activeMonth.value = ''
+    activeBrandFilter.value = ''
+    bread.value = '专辑：' + value
+  } else if (key === 'year') {
+    activeYear.value = value
+    activeMonth.value = ''
+    activeCategory.value = ''
+    activeTag.value = ''
+    activeAlbum.value = ''
+    activeBrandFilter.value = ''
+    bread.value = '存档：' + value
+  } else if (key === 'month') {
+    activeMonth.value = value
+    activeCategory.value = ''
+    activeTag.value = ''
+    activeAlbum.value = ''
+    activeBrandFilter.value = ''
+    bread.value = '存档：' + activeYear.value + '/' + value
+  } else if (key === 'yearmonth') {
+    const [y, m] = value.split('|')
+    activeYear.value = y
+    activeMonth.value = m
+    activeCategory.value = ''
+    activeTag.value = ''
+    activeAlbum.value = ''
+    activeBrandFilter.value = ''
+    bread.value = '存档：' + y + '/' + m
   }
   if (typeof window !== 'undefined') {
     const url = new URL(window.location.href)
@@ -57,8 +105,22 @@ provide('setFilter', (key: string, value: string) => {
     url.searchParams.delete('year')
     url.searchParams.delete('month')
     url.searchParams.delete('page')
-    if (value) url.searchParams.set(key, value)
+    if (value) {
+      if (key === 'yearmonth') {
+        const [y, m] = value.split('|')
+        url.searchParams.set('year', y)
+        url.searchParams.set('month', m)
+      } else {
+        url.searchParams.set(key, value)
+      }
+    }
     history.pushState(null, '', url.toString())
+    nextTick(() => {
+      const banner = document.querySelector('.hero-banner')
+      if (banner) {
+        window.scrollTo({ top: banner.offsetTop + banner.offsetHeight, behavior: 'smooth' })
+      }
+    })
   }
 })
 const posts = computed(() => {

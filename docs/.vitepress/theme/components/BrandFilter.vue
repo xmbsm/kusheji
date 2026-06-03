@@ -2,30 +2,24 @@
     <div class="wrap">
         <div class="brandfilter">
             <span class="brand" v-for="(item, key) in data" :key="key">
-                <a class="a" :href="withBase(`/?brand=${String(key)}`)" @click="closeDropdown"> {{ key }}<strong class="VPBadge tip strong mini">{{
-                    data[key].length }}</strong></a>
+                <span class="a" @click="goBrand(String(key))"> {{ key }}<strong class="VPBadge tip strong mini">{{
+                    data[key].length }}</strong></span>
             </span>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { withBase } from 'vitepress'
+import { computed, inject } from 'vue'
+import { hideAllPoppers } from 'floating-vue'
 import { initBrandFilter } from '../functions'
 import { data as themeposts } from '../posts.data'
 const data = computed(() => initBrandFilter(themeposts))
 
-function closeDropdown(event: Event) {
-    let element = event.target as HTMLElement
-    while (element && !element.classList.contains('wrap')) {
-        element = element.parentElement as HTMLElement
-    }
-    if (element) {
-        const brandfilterButton = document.querySelector('.brandfilter-btn.a')
-        if (brandfilterButton) {
-            brandfilterButton.click()
-        }
-    }
+const setFilter = inject<(key: string, value: string) => void>('setFilter', () => {})
+
+const goBrand = (brand: string) => {
+    setFilter('brand', brand)
+    hideAllPoppers()
 }
 </script>
 
@@ -68,6 +62,7 @@ function closeDropdown(event: Event) {
         color: var(--vp-c-text-1);
         font-weight: 500;
         text-decoration: none;
+        cursor: pointer;
     }
 
     .a:hover {
