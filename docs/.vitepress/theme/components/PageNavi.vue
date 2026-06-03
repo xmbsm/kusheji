@@ -60,7 +60,7 @@
         <span class="a">全部</span>
       </li>
       <li class="li" v-for="(item, key) in data" @click="choose(String(key)); goCategory(String(key))"
-        :class="{ on: currentCategory === String(key) || selected === String(key) }">
+        :class="{ on: currentCategory === String(key) }">
         <span class="a">{{ key }}<strong
             class="VPBadge tip strong mini">{{ data[key].length }}</strong></span>
       </li>
@@ -75,7 +75,7 @@
         <span class="a">全部</span>
       </li>
       <li class="li" v-for="(item, key) in data" @click="choose(String(key)); goCategory(String(key))"
-        :class="{ on: currentCategory === String(key) || selected === String(key) }">
+        :class="{ on: currentCategory === String(key) }">
         <span class="a">{{ key }}<strong
             class="VPBadge tip strong mini">{{ data[key].length }}</strong></span>
       </li>
