@@ -119,7 +119,7 @@ provide('setFilter', (key: string, value: string) => {
     nextTick(() => {
       const banner = document.querySelector('.hero-banner')
       if (banner) {
-        window.scrollTo({ top: banner.offsetTop + banner.offsetHeight, behavior: 'smooth' })
+        window.scrollTo({ top: getScrollTop(banner), behavior: 'smooth' })
       }
     })
   }
@@ -168,6 +168,12 @@ const getposts = computed(() => {
 })
 
 const isPageChange = ref(false)
+const getScrollTop = (banner: Element) => {
+  const offset = banner.offsetTop + banner.offsetHeight
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 960
+  return offset - (isMobile ? 0 : navHeight)
+}
+const navHeight = typeof window !== 'undefined' ? parseInt(getComputedStyle(document.documentElement).getPropertyValue('--vp-nav-height')) || 56 : 56
 
 const pageChange = (e: any) => {
   if (typeof window === 'undefined') return
@@ -185,12 +191,17 @@ router.onAfterRouteChanged = (to) => {
   nextTick(() => {
     if (isPageChange.value) {
       isPageChange.value = false
+      const banner = document.querySelector('.hero-banner')
+      if (banner) {
+        window.scrollTo({ top: getScrollTop(banner), behavior: 'smooth' })
+      }
+      return
     }
     const url = new URL(to, window.location.origin)
     if (url.searchParams.get('tag') || url.searchParams.get('brand') || url.searchParams.get('album') || url.searchParams.get('year') || url.searchParams.get('category')) {
       const banner = document.querySelector('.hero-banner')
       if (banner) {
-        window.scrollTo({ top: banner.offsetTop + banner.offsetHeight, behavior: 'smooth' })
+        window.scrollTo({ top: getScrollTop(banner), behavior: 'smooth' })
       }
     }
   })
@@ -267,7 +278,7 @@ onMounted(() => {
     nextTick(() => {
       const banner = document.querySelector('.hero-banner')
       if (banner) {
-        window.scrollTo({ top: banner.offsetTop + banner.offsetHeight, behavior: 'smooth' })
+        window.scrollTo({ top: getScrollTop(banner), behavior: 'smooth' })
       }
     })
   }
