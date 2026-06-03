@@ -43,8 +43,7 @@
       </div>
       </div>
     </div>
-    <p class="readtime" v-if="type === 'single'"><span class="warning">全文共{{ wordCount }}字，{{ '预计阅读' + readTime + '分钟'
-    }}</span></p>
+
     <!-- <div class="cover" v-if="type === 'single' && dataSource.frontmatter?.cover">
       <p>
         <img class="img" :src="dataSource.frontmatter.cover" alt="效果">
@@ -54,11 +53,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { withBase } from 'vitepress'
 import { useStorage } from '@vueuse/core'
 import type { Post } from '../types'
-import { relativeTime, formatTime, countWord } from '../functions'
+import { relativeTime, formatTime } from '../functions'
 const listview = useStorage('listview', 'grid')
 const dataformat = ref(0)
 const props = defineProps<{
@@ -76,39 +75,6 @@ if (dataSource.value?.frontmatter?.date) {
     dataformat.value = 0
   }
 }
-const wordCount = ref(0)
-const imageCount = ref(0)
-const wordTime = computed(() => {
-  return ((wordCount.value / 275) * 60)
-})
-
-const imageTime = computed(() => {
-  const n = imageCount.value
-  if (imageCount.value <= 10) {
-    // 等差数列求和
-    return n * 13 + (n * (n - 1)) / 2
-  }
-  return 175 + (n - 10) * 3
-})
-const readTime = computed(() => {
-  return Math.ceil((wordTime.value + imageTime.value) / 60)
-})
-
-function analyze() {
-  if (typeof window === 'undefined') return
-  document.querySelectorAll('.meta-des').forEach(v => v.remove())
-  const docDomContainer = window.document.querySelector('#VPContent')
-  const imgs = docDomContainer?.querySelectorAll<HTMLImageElement>(
-    '.content-container .main img'
-  )
-  imageCount.value = imgs?.length || 0
-  const words = docDomContainer?.querySelector('.content-container .main')?.textContent || ''
-  wordCount.value = countWord(words)
-}
-
-onMounted(() => {
-  analyze()
-})
 </script>
 
 <style scoped>
@@ -367,29 +333,6 @@ onMounted(() => {
         }
       }
     }
-  }
-}
-
-.readtime {
-  margin-top: 20px;
-  margin-bottom: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  .warning {
-    display: block;
-    margin-left: 2px;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    padding: 0 16px;
-    line-height: 33px;
-    font-size: 13px;
-    font-weight: 500;
-    border-color: var(--vp-badge-warning-border);
-    color: var(--vp-badge-warning-text);
-    background-color: var(--vp-badge-warning-bg);
   }
 }
 
