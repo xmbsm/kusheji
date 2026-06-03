@@ -288,7 +288,13 @@ onMounted(() => {
 }
 
 .post-link:hover {
-  background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+@media (hover: none) {
+    .post-link:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
 }
 
 .link-icon {

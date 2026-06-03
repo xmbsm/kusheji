@@ -307,6 +307,13 @@ html, body {
     max-width: 100% !important;
     padding: 0 20px !important;
     box-sizing: border-box !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+.VPNavBar:not(.top) .content-body {
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
 
 /* 修改导航栏搜索按钮的放大镜样式 */
@@ -330,10 +337,46 @@ html, body {
         background-color: var(--bgfilter) !important;
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+
+    .VPNavBar:not(.top) {
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+
+    .VPNavBar .wrapper,
+    .VPNavBar:not(.top) .wrapper {
+        box-shadow: none !important;
+        border-bottom: none !important;
     }
 
     .VPNavBar .content-body {
         background-color: transparent !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    .VPNavBar:not(.top) .content-body {
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    .VPNav {
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+
+    .VPNav .divider,
+    .VPNav .curtain {
+        display: none !important;
+    }
+
+    .home .VPDoc,
+    .home .VPContent {
+        border-top: none !important;
+        box-shadow: none !important;
     }
 
     .nav-search-btn-wait svg {
@@ -796,6 +839,25 @@ p.icons img {
     display: none !important;
 }
 
+.VPNav {
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
+.VPNavBar,
+.VPNavBar:not(.top),
+.VPNavBar.top {
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
+.VPNavBar .wrapper,
+.VPNavBar:not(.top) .wrapper,
+.VPNavBar.top .wrapper {
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
 .VPNavBarTitle {
     display: none !important;
 }
@@ -842,6 +904,11 @@ p.icons img {
 
 /* 隐藏无侧边栏页面的菜单栏 */
 .no-sidebar .VPLocalNav {
+    display: none !important;
+}
+
+/* 隐藏首页的 VPLocalNav（移动端滚动后出现的灰色线条） */
+.home .VPLocalNav {
     display: none !important;
 }
 
