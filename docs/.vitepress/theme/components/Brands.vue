@@ -3,20 +3,24 @@
     <div class="wrap">
         <div class="brands">
             <span class="brand" v-for="(item, key) in data" :key="key">
-                <span class="a" @click="goAlbum(String(key))"> {{ key }}<strong class="VPBadge tip strong mini">{{
+                <span v-if="hasSetFilter" class="a" @click="goAlbum(String(key))"> {{ key }}<strong class="VPBadge tip strong mini">{{
                     data[key].length }}</strong></span>
+                <a v-else class="a" :href="withBase(`/?album=${String(key)}`)"> {{ key }}<strong class="VPBadge tip strong mini">{{
+                    data[key].length }}</strong></a>
             </span>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
+import { withBase } from 'vitepress'
 import { hideAllPoppers } from 'floating-vue'
 import { initBrands } from '../functions'
 import { data as themeposts } from '../posts.data'
 const data = computed(() => initBrands(themeposts))
 
 const setFilter = inject<(key: string, value: string) => void>('setFilter', () => {})
+const hasSetFilter = inject<import('vue').Ref<boolean>>('hasSetFilter', computed(() => false))
 
 const goAlbum = (album: string) => {
     setFilter('album', album)

@@ -3,8 +3,10 @@
     <div class="wrap">
         <div class="tags">
             <span class="tag" v-for="(item, key) in data">
-                <span class="a" @click="goTag(String(key))"> {{ '#' + key }}<strong class="VPBadge tip strong mini">{{
+                <span v-if="hasSetFilter" class="a" @click="goTag(String(key))"> {{ '#' + key }}<strong class="VPBadge tip strong mini">{{
                     data[key].length }}</strong></span>
+                <a v-else class="a" :href="withBase(`/?tag=${key.toString()}`)"> {{ '#' + key }}<strong class="VPBadge tip strong mini">{{
+                    data[key].length }}</strong></a>
             </span>
         </div>
     </div>
@@ -12,12 +14,14 @@
 
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
+import { withBase } from 'vitepress'
 import { hideAllPoppers } from 'floating-vue'
 import { initTags } from '../functions'
 import { data as themeposts } from '../posts.data'
 const data = computed(() => initTags(themeposts))
 
 const setFilter = inject<(key: string, value: string) => void>('setFilter', () => {})
+const hasSetFilter = inject<import('vue').Ref<boolean>>('hasSetFilter', computed(() => false))
 
 const goTag = (tag: string) => {
     setFilter('tag', tag)

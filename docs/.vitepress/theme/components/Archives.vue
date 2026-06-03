@@ -3,11 +3,16 @@
     <div class="wrap">
         <div class="archives">
             <div class="archive" v-for="(item, name) in data">
-                <div class="year"><span class="year-link" @click="goYear(String(name))">{{ name.toString() }}</span></div>
+                <div class="year">
+                    <span v-if="hasSetFilter" class="year-link" @click="goYear(String(name))">{{ name.toString() }}</span>
+                    <a v-else :href="withBase(`/?year=${name.toString()}`)">{{ name.toString() }}</a>
+                </div>
                 <div class="months">
                     <span class="month" v-for="(cell, key) in item">
-                        <span class="a" @click="goMonth(String(name), String(key))">{{
+                        <span v-if="hasSetFilter" class="a" @click="goMonth(String(name), String(key))">{{
                             key.toString() }}<strong class="VPBadge tip strong mini">{{ item[key].length }}</strong></span>
+                        <a v-else class="a" :href="withBase(`/?year=${name.toString()}&month=${key.toString()}`)">{{
+                            key.toString() }}<strong class="VPBadge tip strong mini">{{ item[key].length }}</strong></a>
                     </span>
                 </div>
             </div>
@@ -17,12 +22,14 @@
 
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
+import { withBase } from 'vitepress'
 import { hideAllPoppers } from 'floating-vue'
 import { initArchives } from '../functions'
 import { data as themeposts } from '../posts.data'
 const data = computed(() => initArchives(themeposts))
 
 const setFilter = inject<(key: string, value: string) => void>('setFilter', () => {})
+const hasSetFilter = inject<import('vue').Ref<boolean>>('hasSetFilter', computed(() => false))
 
 const goYear = (year: string) => {
     setFilter('year', year)

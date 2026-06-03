@@ -36,6 +36,7 @@ const bread = ref('全部内容')
 const breadrxt = computed(() => (bread.value))
 
 provide('activeCategory', activeCategory)
+provide('hasSetFilter', ref(true))
 
 provide('setFilter', (key: string, value: string) => {
   currentpage.value = 1

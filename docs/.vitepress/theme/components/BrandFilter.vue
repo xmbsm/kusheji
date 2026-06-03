@@ -2,20 +2,24 @@
     <div class="wrap">
         <div class="brandfilter">
             <span class="brand" v-for="(item, key) in data" :key="key">
-                <span class="a" @click="goBrand(String(key))"> {{ key }}<strong class="VPBadge tip strong mini">{{
+                <span v-if="hasSetFilter" class="a" @click="goBrand(String(key))"> {{ key }}<strong class="VPBadge tip strong mini">{{
                     data[key].length }}</strong></span>
+                <a v-else class="a" :href="withBase(`/?brand=${String(key)}`)"> {{ key }}<strong class="VPBadge tip strong mini">{{
+                    data[key].length }}</strong></a>
             </span>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
+import { withBase } from 'vitepress'
 import { hideAllPoppers } from 'floating-vue'
 import { initBrandFilter } from '../functions'
 import { data as themeposts } from '../posts.data'
 const data = computed(() => initBrandFilter(themeposts))
 
 const setFilter = inject<(key: string, value: string) => void>('setFilter', () => {})
+const hasSetFilter = inject<import('vue').Ref<boolean>>('hasSetFilter', computed(() => false))
 
 const goBrand = (brand: string) => {
     setFilter('brand', brand)
