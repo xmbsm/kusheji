@@ -19,7 +19,7 @@ export default defineConfig<ThemeConfig>({
     title: '酷设计',
     base: '/',
     head,
-    description: '免费可商用中文字体下载网站，无版权免费字体下载！',
+    description: '酷设计致力打造设计师学习交流平台，提供 behance, dribbble, CM国外知名网站的UI, 图标, 样机Mockups, 纹理, Sketch, PPT模板, PS笔刷, 英文字体, wordpress主题, 水彩画等资源，同时更新前端设计、设计教程、设计理论、设计工具和设计欣赏等资讯内容。',
     ignoreDeadLinks: true,
     themeConfig: {
         beecodeurl: 'https://kusheji.com/', //这里是内页ArticleLink组件用到的跳转第三方网址，一般用不到，仅仅用于二次开发
