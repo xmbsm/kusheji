@@ -159,7 +159,7 @@ export default defineConfig<ThemeConfig>({
             title: '酷设计', //网站标题（用于首页全屏大图）
             description: '设计学习交流平台', //网站描述（用于首页全屏大图）
             copyadd: true, //用户复制页面内容时尾巴自动添加版权声明
-            perpage: 40, //列表页每页显示数量
+            perpage: 32, //列表页每页显示数量
             showHeroBanner: true, //是否显示首页全屏大图,大搜索框
             homeBanner: false, //显示首页 banner,banner列表在上面 banner中配置
             bannerHeight: 200, //banner高度
