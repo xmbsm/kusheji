@@ -26,7 +26,7 @@ export default defineConfig<ThemeConfig>({
         sidebar: [{}], //这里如果删掉，左侧栏的内容全部不显示。页面布局会变成通栏
         nav: [
             { text: '素材站', link: 'https://sucai.kusheji.com' },
-            { text: '网址导航', link: 'https://dh.kusheji.com' },
+            { text: '网址导航', link: 'https://dsxdh.com' },
             { text: '专辑', link: '/pages/album' },
             { text: '搜索', link: '/pages/search' }
         ],
